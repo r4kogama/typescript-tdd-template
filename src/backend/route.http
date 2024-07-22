@@ -1,0 +1,54 @@
+
+
+GET http://localhost:8000 HTTP/1.1
+###
+
+GET http://localhost:8000/task/2 HTTP/1.1
+
+###
+
+GET http://localhost:8000/tasks HTTP/1.1
+
+###
+
+POST http://localhost:8000/tasks HTTP/1.1
+content-type: application/json
+
+{
+    "name":  "ir al super",
+    "content" : "comprar algo"
+}
+
+###
+
+POST http://localhost:8000/tasks HTTP/1.1
+content-type: application/json
+
+{
+    "name": "reunion",
+    "content" : "ir a la reunion"
+}
+
+###
+
+POST http://localhost:8000/tasks HTTP/1.1
+content-type: application/json
+
+{
+    "name": "meetting",
+    "content" : "ir a la reunion otra vez"
+}
+
+###
+
+PATCH  http://localhost:8000/tasks/2 HTTP/1.1
+content-type: application/json
+
+{
+    "status": "completed"
+}
+
+###
+DELETE  http://localhost:8000/tasks/1 HTTP/1.1
+
+###

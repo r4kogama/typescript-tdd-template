@@ -1,11 +1,16 @@
 import { App } from "./App";
 
-try {
-	void new App().start();
-} catch (e) {
-	process.exit(1);
-}
 
+const app: App = new App();
+app.start().then( () =>{
+	try {
+	
+	} catch (e) {
+		console.log(e);
+		process.exit(1);
+	}
+});
 process.on("uncaughtException", () => {
 	process.exit(1);
 });
+
