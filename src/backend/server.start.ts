@@ -2,7 +2,7 @@ import { App } from "./App";
 import { controlInjection } from "../task/infrastructure/dependency/injectionControl";
 import { landingpage } from "../views/layout/main";
 
-const app: App = new App();
+export const app: App = new App();
 app.start().then( () =>{
 	try {
 		const appExpress = app.server?.getExpress();
