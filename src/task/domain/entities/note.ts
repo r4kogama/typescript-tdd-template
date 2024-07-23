@@ -1,6 +1,6 @@
+const Status = require('../values/taskStatus');
 
-import { TaskStatus as State } from "../values/taskStatus";
-export class Note{
+class Note{
     constructor(
         public name: string, 
         public content: string, 
@@ -9,13 +9,14 @@ export class Note{
 
     asignStatusNote(current: string):string | undefined{
         if(current === "completed"){
-            return this.status = State.COMPLETED;
+            return this.status = Status.COMPLETED;
         }else if(current === "incompleted"){
-            return this.status = State.INCOMPLETE;
+            return this.status = Status.INCOMPLETE;
         }else if(current === "pending"){
-            return this.status = State.PENDING;
+            return this.status = Status.PENDING;
         }else{
-            return this.status = State.PENDING;
+            return this.status = Status.PENDING;
         }
     }
 }
+module.exports = Note;
