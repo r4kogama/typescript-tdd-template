@@ -6,8 +6,8 @@ export class ManageTask implements TaskRepository{
     private tasks : Map<string, Note> = new Map();
     constructor(){   }
     
-    isTaskById(id: string): Promise<Boolean> {
-        return new Promise<Boolean>((resolve)=>{
+    async isTaskById(id: string): Promise<Boolean> {
+        return await new Promise<Boolean>((resolve)=>{
             if(this.tasks.has(id)){
                 resolve(true);
             }else{
@@ -58,13 +58,13 @@ export class ManageTask implements TaskRepository{
                     reject({ status: 404, message: 'Promise request update status not found task in the manage' });
                     return;
                     }
-                    const getNote: Note | undefined = this.tasks.get(id);
-                    if (isObject(getNote)) {
-                        getNote.status = getNote.asignStatusNote(state);
-                        resolve(getNote);
-                    }else{
-                    reject();
-                    } 
+                const getNote: Note | undefined = this.tasks.get(id);
+                if (isObject(getNote)) {
+                    getNote.status = getNote.asignStatusNote(state);
+                    resolve(getNote);
+                }else{
+                reject();
+                } 
             } catch (error) {
                 reject(new Error(`Error request update status task: ${error}`));
             }
@@ -90,7 +90,7 @@ export class ManageTask implements TaskRepository{
         return await new Promise<[string, Note][] | undefined> ((resolve, reject) => {
             try {
                 if(this.tasks.size === 0){
-                    reject({ status: 404, message: 'Promise request delete not found task in the manage' });
+                    reject({ status: 404, message: 'Promise request get all not found task in the manage' });
                     return;
                 }
                 const cloneTasks: Map<string, Note> = structuredClone(this.tasks);

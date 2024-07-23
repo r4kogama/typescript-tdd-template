@@ -1,7 +1,7 @@
-import { TaskController } from "../controller/taskHttpController";
 import { ManageTask } from "../adapters/manageTask";
 import { HttpResponse } from "../../../shared/response/httpResponse";
 import { TaskServiceInteractor } from "../../application/services/taskService";
+import { TaskController } from "../controller/taskHttpController";
 
 export const controlInjection = ():TaskController => {
     const statusRepository : HttpResponse = new HttpResponse();

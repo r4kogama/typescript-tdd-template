@@ -3,6 +3,7 @@ import { json, urlencoded } from "body-parser";
 import cors from "cors";
 import express from "express";
 import helmet from "helmet";
+import { routes, routeSpecific } from "../task/infrastructure/routes/route";
 
 export class Server {
 
@@ -15,7 +16,8 @@ export class Server {
 		this.express.use(helmet());
 		this.express.use(cors());
 		this.express.use(json());
-		this.express.use(express.Router());
+		this.express.use('/v1/api/tasks/all', routeSpecific());
+		this.express.use('/v1/api/tasks', routes());
 		this.express.use(urlencoded({ extended: true }));
 	}
 
