@@ -1,12 +1,12 @@
-const Note = require('./note');
+import { Note } from "./note";
 
 export class Task  {
-    private note : typeof Note;
+    private note : Note;
     constructor(name: string, description: string){
         this.note = new Note(name, description);
     }
      
-    getNote(): typeof Note {
+    getNote(): Note {
         return this.note;
     }
 

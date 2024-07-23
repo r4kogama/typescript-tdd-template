@@ -1,6 +1,6 @@
-const Note = require('../../domain/entities/note');
+import { Note } from "../../domain/entities/note";
 
- export function isObject(obj: typeof Note | undefined ): obj is typeof Note  {
+ export function isObject(obj: Note | undefined ): obj is Note  {
    if(obj !== undefined){
     return obj instanceof Note;
   }
