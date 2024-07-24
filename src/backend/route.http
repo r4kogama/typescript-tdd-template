@@ -3,11 +3,13 @@
 GET http://localhost:8000/v1/api/tasks HTTP/1.1
 ###
 
-GET http://localhost:8000/v1/api/tasks/2 HTTP/1.1
+GET http://localhost:8000/v1/api/tasks/1 HTTP/1.1
+Authorization: Basic YWRtaW46YWRtaW4=
 
 ###
 
 GET http://localhost:8000/v1/api/tasks/all HTTP/1.1
+Authorization: Basic YWRtaW46YWRtaW4=
 
 ###
 
@@ -41,8 +43,9 @@ content-type: application/json
 
 ###
 
-PATCH  http://localhost:8000/v1/api/tasks/7 HTTP/1.1
+PATCH  http://localhost:8000/v1/api/tasks/1 HTTP/1.1
 content-type: application/json
+Authorization: Basic YWRtaW46YWRtaW4=
 
 {
     "status": "completed"
@@ -50,5 +53,6 @@ content-type: application/json
 
 ###
 DELETE  http://localhost:8000/v1/api/tasks/1 HTTP/1.1
+Authorization: Basic YWRtaW46YWRtaW4=
 
 ###
