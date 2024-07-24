@@ -8,9 +8,7 @@ export const authMiddelware = (req: Request, res: Response, next: NextFunction)=
     if(!header){
        return statusRepository.statusForbidden(res, data )
     }
-    //const credentials:string = Buffer.from('admin:admin').toString('base64');
     const credentials: string = header.split(' ')[1];
-    console.log(credentials);
     if(!credentials){
         return statusRepository.statusForbidden(res, data )
     }
