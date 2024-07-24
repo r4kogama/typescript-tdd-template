@@ -6,6 +6,10 @@ export class ManageTask implements TaskRepository{
     private tasks : Map<string, Note> = new Map();
     constructor(){   }
     
+    getTasks(): Map<string, Note>{
+		return this.tasks;
+	}
+
     async isTaskById(id: string): Promise<Boolean> {
         return await new Promise<Boolean>((resolve)=>{
             if(this.tasks.has(id)){
@@ -26,6 +30,7 @@ export class ManageTask implements TaskRepository{
                     let keys: string[] =  [...this.tasks.keys()];
                     let idTask: number = Math.max(...keys.map(Number));
                     this.tasks.set((idTask + 1).toString(), task);
+                    //console.log(this.tasks); 
                     resolve();
                 }
             } catch (error) {

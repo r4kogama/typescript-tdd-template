@@ -10,13 +10,7 @@ This GitHub Actions workflow automatically builds and tests the application when
 
 ### 📥 Installation
 
-To get started with this template, you first need to clone the repository:
-
-```bash
-git clone https://github.com/AraManjon/typescript-tdd-template.git
-```
-
-Then, install the project dependencies:
+Install the project dependencies:
 
 ```bash
 npm install
@@ -77,9 +71,6 @@ This project comes with several predefined scripts in the package.json file:
 
 - helmet: middleware for adding security headers
 
-- mongodb: driver for MongoDB
-
-- mysql2: MySQL client for Node.js
 
 ### 🛠️ Dev Dependencies
 
@@ -89,13 +80,9 @@ This project comes with several predefined scripts in the package.json file:
 
 - @types/jest: TypeScript definitions for jest
 
-- @types/mysql: TypeScript definitions for mysql
-
 - eslint: linter for TypeScript
 
 - eslint-config-codely: ESLint configuration used by CodelyTV
-
-- mysql: MySQL driver for Node.js
 
 - rimraf: cross-platform tool for removing files and directories
 
@@ -112,29 +99,31 @@ In this folder structure, the code is organized according to the principles of H
 ```
 src/
 ├── backend
-│   ├── middlewares
+│   ├── route.http
 │   ├── App.ts
 │   ├── server.start.ts
 │   └── Server.ts
 ├── shared
-│   ├── utils
-│   ├── domain
-│   └── infrastructure
-│       ├── config
-│       └── persistence
-└── user
+│   ├── response
+│   ├── model
+│   └── repositories
+│       
+│       
+└── task
     ├── application
     │   ├── services
-    │   └── use-cases
+    │   └── repositories
     ├── domain
+    |   ├── values
     │   ├── entities
     │   └── repositories
     └── infrastructure
-        ├── controllers
+        ├── controller
         ├── repositories
-        ├── routes
-        ├── services
-        └── UserModule.ts
+        ├── database
+        ├── adapters
+        ├── guards
+
 ```
 
 
