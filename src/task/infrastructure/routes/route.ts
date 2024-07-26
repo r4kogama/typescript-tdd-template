@@ -1,10 +1,10 @@
 import express, { Request, Response, Router } from 'express';
+import asyncHandler from 'express-async-handler';
 import { authMiddelware } from '../../../backend/middlewares/auth';
 import { landingpage } from '../../../views/layout/main';
 import { pathMiddelware } from '../../../backend/middlewares/pathRoute';
 import { controlInjection } from '../dependency/injectionControl';
 import { TaskController } from '../controller/taskHttpController';
-import asyncHandler from 'express-async-handler';
 
 const control: TaskController = controlInjection();
 const router: Router = express.Router();
