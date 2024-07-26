@@ -8,7 +8,7 @@ import asyncHandler from 'express-async-handler';
 
 const control: TaskController = controlInjection();
 const router: Router = express.Router();
-//const statusRepository: HttpResponse = new HttpResponse();
+
 export const routes = (): Router => {
   router.get(['/home', '/'], (req: Request, res: Response) => {
     res.send(landingpage);
