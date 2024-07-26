@@ -99,6 +99,7 @@ In this folder structure, the code is organized according to the principles of H
 ```
 src/
 ├── backend
+│   ├── middlewares
 │   ├── route.http
 │   ├── App.ts
 │   ├── server.start.ts
@@ -114,7 +115,7 @@ src/
     │   ├── services
     │   └── repositories
     ├── domain
-    |   ├── values
+    │   ├── values
     │   ├── entities
     │   └── repositories
     └── infrastructure
