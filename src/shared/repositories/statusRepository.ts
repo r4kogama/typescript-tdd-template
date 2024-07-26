@@ -1,12 +1,13 @@
-import Data from "../model/types";
-import { Response } from "express";
+import { Response } from 'express';
+import Data from '../model/types';
 
-export interface statusRepository{
-    statusOk(res: Response, data?: Data):Response,
-    statusCreated(res: Response, data?: Data):Response,
-    statusBadRequest(res: Response, data?: Data):Response,
-    statusNotFound(res: Response, data?: Data):Response,
-    statusError(res: Response, data?: Data): Response,
-    statusUnauthorized(res: Response, data?: Data): Response,
-    statusForbidden(res: Response, data? : Data):Response  
+export interface statusRepository {
+  statusOk(res: Response, datas?: Data): void;
+  statusNoContent(res: Response, datas?: Data): void;
+  statusCreated(res: Response, datas?: Data): void;
+  statusBadRequest(res: Response, datas?: Data): void;
+  statusNotFound(res: Response, datas?: Data): void;
+  statusError(res: Response, datas?: Data): void;
+  statusUnauthorized(res: Response, datas?: Data): void;
+  statusForbidden(res: Response, datas?: Data): void;
 }

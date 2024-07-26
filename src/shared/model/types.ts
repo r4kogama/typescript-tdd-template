@@ -1,3 +1,3 @@
- type Data = unknown;
+type Data = unknown;
 
- export default Data;
+export default Data;

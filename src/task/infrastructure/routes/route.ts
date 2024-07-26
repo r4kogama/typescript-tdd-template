@@ -1,22 +1,27 @@
-import express, { Request, Response, NextFunction } from 'express';
-import { landingpage } from '../../../views/layout/main';
-import { controlInjection } from '../dependency/injectionControl';
+import express, { Request, Response, Router } from 'express';
 import { authMiddelware } from '../../../backend/middlewares/auth';
+import { landingpage } from '../../../views/layout/main';
+import { pathMiddelware } from '../../../backend/middlewares/pathRoute';
+import { controlInjection } from '../dependency/injectionControl';
+import { TaskController } from '../controller/taskHttpController';
+import asyncHandler from 'express-async-handler';
 
-const control = controlInjection();
-const router = express.Router();
+const control: TaskController = controlInjection();
+const router: Router = express.Router();
+//const statusRepository: HttpResponse = new HttpResponse();
+export const routes = (): Router => {
+  router.get(['/home', '/'], (req: Request, res: Response) => {
+    res.send(landingpage);
+  });
+  router.use(pathMiddelware);
+  router.get('/:id', authMiddelware, asyncHandler(control.getTaskIdController));
+  router.post('/', authMiddelware, asyncHandler(control.postCreateTaskController));
+  router.patch('/:id', authMiddelware, asyncHandler(control.patchTaskStatusController));
+  router.delete('/:id', authMiddelware, asyncHandler(control.deleteTaskController));
+  return router;
+};
 
-export const routes = () => {
-    router.get('/',(req: Request, res:Response ) =>{res.send(landingpage)});
-    router.get('/:id',    authMiddelware,  control.getTaskIdController);
-    router.post('/',      control.postCreateTaskController);
-    router.patch('/:id',  authMiddelware, control.patchTaskStatusController);
-    router.delete('/:id', authMiddelware, control.deleteTaskController);
-    return router;
-}
-
-export const routeSpecific = () => {
-    router.get('/', authMiddelware, control.getAllTasksController);
-    return router;
-}
-
+export const routeSpecific = (): Router => {
+  router.get('/all', authMiddelware, asyncHandler(control.getAllTasksController));
+  return router;
+};
