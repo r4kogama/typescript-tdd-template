@@ -35,7 +35,7 @@ export const pathMiddelware = (req: Request, res: Response, next: NextFunction):
   const isAccept: boolean = isMethodsAccept(methodRoute);
   const isPath: boolean = regex.test(urlPath);
   if (!urlPath.startsWith('/v1/api/tasks')) {
-    const message = getMessage('base', methodRoute);
+    const message = getMessage('base', urlPath);
     statusRepository.statusBadRequest(res, message);
   } else if (methodRoute === 'get' || (isPath && isAccept)) {
     next();

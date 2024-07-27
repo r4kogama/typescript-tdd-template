@@ -1,19 +1,26 @@
+import { Note } from "../../../../src/task/domain/entities/note";
 import { Task } from "../../../../src/task/domain/entities/task";
 import { ManageTask } from "../../../../src/task/infrastructure/adapters/manageTask";
 
 
 export const taskNotes = [
 	{
+		idNote: "1",
 		name : "comprar",
-		content: "ir al super"
+		content: "ir al super",
+		status : "pending"
 	},
 	{
+		idNote: "2",
 		name : "acabar sprint",
-		content: "terminar sprint 4"
+		content: "terminar sprint 4",
+		status : "completed"
 	},
 	{
+		idNote: "3",
 		name : "reunion",
-		content: "meeting zoom"
+		content: "meeting zoom",
+		status : "pending"
 	}
 ];
 

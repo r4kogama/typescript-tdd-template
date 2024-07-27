@@ -7,10 +7,12 @@ export const authMiddelware = (req: Request, res: Response, next: NextFunction):
   const statusRepository: HttpResponse = new HttpResponse();
   if (!header) {
     statusRepository.statusForbidden(res, data);
+    return;
   }
-  const credentials: string = header!.split(' ')[1];
+  const credentials: string | undefined = header.split(' ')[1];
   if (!credentials) {
     statusRepository.statusForbidden(res, data);
+    return;
   }
   const decoCredentias: string = Buffer.from(credentials, 'base64').toString('utf-8');
   const [user, password] = decoCredentias.split(':');

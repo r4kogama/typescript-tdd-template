@@ -21,11 +21,13 @@ export class ManageTask implements TaskRepository {
     await new Promise<void>((resolve, reject) => {
       try {
         if (this.tasks.size === 0) {
+          task.setId('1');
           this.tasks.set('1', task);
           resolve();
         } else {
           const keys: string[] = [...this.tasks.keys()];
           const idTask: number = Math.max(...keys.map(Number));
+          task.setId((idTask + 1).toString());
           this.tasks.set((idTask + 1).toString(), task);
           resolve();
         }

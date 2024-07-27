@@ -4,7 +4,7 @@
   "description": "**1.- instalar typescript en el folder proyecto**",
   "main": "./src/backend/server.start.ts",
   "scripts": {
-    "test": "cross-env NODE_ENV=dev jest --verbose --silent",
+    "test": "cross-env NODE_ENV=dev jest --verbose",
     "test:watch": "npm run test -- --watch",
     "lint": "eslint --ext .ts ./src",
     "lint:fix": "eslint --fix --ext .ts ./src",

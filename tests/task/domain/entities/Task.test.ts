@@ -16,8 +16,8 @@ beforeEach( async () =>{
 
  describe("Routes Api rest Task ", () => {
 	test("Compare a create a task object with the correct format", () => {
-		const task = new Task("comprar", "ir a comprar al super");
-		const expectedGreeting = {name: "comprar", content : "ir a comprar al super", status:"pending"};
+		const task = new Task("tarea", "descripcion");
+		const expectedGreeting = {name: "tarea", content : "descripcion", status:"pending", idNote:"null"};
 		const greeting = task.getNote();
 		expect(greeting).toEqual(expectedGreeting);
 	});
@@ -81,8 +81,9 @@ describe('GET /tasks', function() {
 		  const response = await request(app)
 		  .get('/v1/api/tasks/all')
 		  .auth('admin', 'admin')
-		  const contents = response.body.data.map(([idx, note]: [string, Note]) => note.content);
-		  expect(contents).toContain(taskNotes[1].content)
+		  .set('Accept', 'application/json')
+		  const notes = response.body.data.map(([idx, note]: [string, Note]) => Note.fromJSON(note));
+		  expect(notes.map((note: Note) => note.getId())).toContain(taskNotes[1].idNote)
 	  });
 });  
 describe('GET /tasks/all', function() {
@@ -92,9 +93,9 @@ describe('GET /tasks/all', function() {
 		.get('/v1/api/tasks/all')
 		.auth('admin', 'admin')
 		.set('Accept', 'application/json')
-		const contents = res.body.data.map(([idx, note]: [string, Note]) => note.content);
-		expect(contents).toContain(taskNotes[1].content)
-		expect(contents).toContain(taskNotes[0].content)
+		const notes = res.body.data.map(([idx, note]: [string, Note]) => Note.fromJSON(note));
+		expect(notes.map((note: Note) => note.getId())).toContain(taskNotes[1].idNote)
+		expect(notes.map((note: Note) => note.getId())).toContain(taskNotes[0].idNote)
 	});  
 }); 
 describe('GET /tasks/id', function() {
@@ -106,7 +107,7 @@ describe('GET /tasks/id', function() {
 		.set('Accept', 'application/json')
 		.expect('Content-Type', 'application/json; charset=utf-8')
 		expect(res.status).toEqual(200);
-		expect(res.body.data.name).toEqual('comprar');
+		expect(res.body.data.idNote).toContain(taskNotes[0].idNote)
 	}); 
 }); 
 describe('GET /tasks/id No authorization', function() {
@@ -123,38 +124,46 @@ describe('GET /tasks/id No authorization', function() {
  describe('PATCH /tasks/id', function() {
 	
 	test('A task can update its status to completed', async () => {
+		const idTask = '2';
 		const res = await request(app)
-		.patch('/v1/api/tasks/1')
+		.patch('/v1/api/tasks/2')
 		.auth('admin', 'admin')
 		.send(updateTask)
 		.set('Accept', 'application/json')
 		expect(res.status).toEqual(200);
-		expect(res.body.data.name).toEqual('comprar');
+		expect(res.body.data.status).toBe(updateTask.status);
+		
 	}); 
-	test('Check the update of the new task status', async () => {
+	test('Check the update of the new status from the previous task GETting the task', async () => {
+		const idTask = '2';
 		const res = await request(app)
-		.get('/v1/api/tasks/1')
+		.get('/v1/api/tasks/2')
 		.auth('admin', 'admin')
+		.set('Accept', 'application/json')
 		.expect(200)
-		expect(res.body.data.status).toEqual('completed');
-		expect(res.body.data.name).toEqual('comprar');
+		const original = taskNotes.find(note => note.idNote === idTask);
+		expect(res.body.data.status).toEqual(original!.status)
 	}); 
 });  
 
 describe('DELETE /tasks/id', function() {
 	
 	test('a task can delete with a id', async () => {
+		const idTask = '1';
 		const res = await request(app)
-		.delete('/v1/api/tasks/1')
+		.delete(`/v1/api/tasks/${idTask}`)
 		.auth('admin', 'admin')
 		.set('Accept', 'application/json')
 		expect(res.status).toEqual(200);
-		expect(res.body.data.name).toEqual('comprar');
+		const original = taskNotes.find((note) => note.idNote === idTask);
+		expect(res.body.data.name).toEqual(original?.name);
+		expect(res.body.data.id).toBeUndefined();
 	}); 
 
 	test('The current deleted task no longer exists', async () => {
+		const idTask = '1';
 		const res = await request(app)
-		.get('/v1/api/tasks/1')
+		.delete(`/v1/api/tasks/${idTask}`)
 		.auth('admin', 'admin')
 		.set('Accept', 'application/json')
 		expect(res.status).toEqual(404);
@@ -162,9 +171,11 @@ describe('DELETE /tasks/id', function() {
 	}); 
 
 	test('a task with id no valid, can not be deleted', async () => {
+		const idTask = '9999';
 		const res = await request(app)
-		  .delete('/v1/api/tasks/9999')
+		.delete(`/v1/api/tasks/${idTask}`)
 		  .auth('admin', 'admin')
+		  .set('Accept', 'application/json')
 		  .expect(404)
 		  expect(res.body.message).toContain('Not found')
 	  })
